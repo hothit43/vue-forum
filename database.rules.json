@@ -1,0 +1,9 @@
+{
+  "rules": {
+    ".read": "now < 1606028400000",  // 2020-11-22
+    ".write": "now < 1606028400000",  // 2020-11-22
+    "users": {
+      ".indexOn": ["usernameLower", "email"]
+    }
+  }
+}
