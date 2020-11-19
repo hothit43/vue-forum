@@ -53,7 +53,7 @@ export default {
             alert('This is not your post.')
             reject()
           }  
-        });
+        })
    },
 
     fetchPost: ({dispatch}, {id}) => dispatch('fetchItem', {resource: 'posts', id, emoji: '💬'}, {root: true}),

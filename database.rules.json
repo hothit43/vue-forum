@@ -1,9 +1,47 @@
 {
   "rules": {
-    ".read": "now < 1606028400000",  // 2020-11-22
-    ".write": "now < 1606028400000",  // 2020-11-22
+    ".read": true,
     "users": {
-      ".indexOn": ["usernameLower", "email"]
+      ".indexOn": ["usernameLower", "email"],
+      "$user": {
+        ".write": "auth !== null && $user === auth.uid"
+      }
+    },
+    "categories": {
+      ".write": false
+    },
+    "forums": {
+      "$forum":{
+        "lastPostId": {
+          ".write": "auth !== null"
+        },
+        "threads": {
+          ".write": "auth !== null"
+        }
+      }
+    },
+    "posts": {
+      "$post": {
+        ".write": "(auth !== null && auth.uid === data.child('userId').val()) || (!data.exists() && auth !== null)"
+      }
+    },
+    "threads": {
+      "$thread": {
+        "$child":{
+          ".write": "auth !== null"
+        },
+        ".write": "(auth !== null && auth.uid === data.child('userId').val()) || (!data.exists() && auth !== null)"
+      }
+    },
+    "$resource": {
+      "$child": {
+        "$child2": {
+          ".write": "auth !== null"
+        },
+        "userId": {
+          ".write": "!data.exists()"
+        }
+      }
     }
   }
 }
