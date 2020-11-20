@@ -85,5 +85,14 @@ export default {
     } 
 }
 </script>
-<style>
-</style>
+<style scoped>
+    a.logo img {
+        opacity: 0.25;
+        transform: scale(1);
+    }
+    a.logo:hover img {
+        opacity:0.7;
+        transform: scale(1.1);
+
+    }
+</style>>

@@ -36,3 +36,10 @@ new Vue({
   template: '<App/>',
   components: { App }
 })
+
+console.log(`Hi I'm Alex, thank you for checking out the console 😛
+This form was created using Vue.js and firebase for database storage and authentication.
+For more info on firebase go here: https://firebase.google.com/
+
+Feel free to have a look around,
+if you have any questions you can reach me at https://utahdesigns.net 😸`)

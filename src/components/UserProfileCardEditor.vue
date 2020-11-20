@@ -20,7 +20,7 @@
 
       <div class="form-group">
         <input
-          v-model="activeUser.name"
+          v-model.lazy="activeUser.name"
           @blur="$v.activeUser.name.$touch()"
           type="text" placeholder="Full Name" class="form-input text-lead"
         >
@@ -34,6 +34,8 @@
         <textarea v-model="activeUser.bio" class="form-input" id="user_bio" placeholder="Write a few words about yourself."></textarea>
       </div>
 
+      
+
       <div class="stats">
         <span>{{userPostsCount}} posts</span>
         <span>{{userThreadsCount}} threads</span>
@@ -42,8 +44,17 @@
       <hr>
 
       <div class="form-group">
-        <label class="form-label" for="user_website">Website</label>
-        <input v-model="activeUser.website" autocomplete="off" class="form-input" id="user_website">
+        <label for="user_avatar">Avatar</label>
+        <input
+          v-model.lazy="activeUser.avatar"
+          @blur="$v.activeUser.avatar.$touch()"
+          type="text" placeholder="Avatar" class="form-input text-lead text-bold"
+          >
+          <template v-if="$v.activeUser.avatar.$error">
+              <span v-if="!$v.activeUser.avatar.url" class="form-error">The URL is invalid</span>
+              <span v-else-if="!$v.activeUser.avatar.supportedImageFile" class="form-error">The file type is not supported</span>
+              <span v-else-if="!$v.activeUser.avatar.responseOk" class="form-error">The file cannot be found</span>
+          </template>
       </div>
 
       <div class="form-group">
@@ -61,6 +72,12 @@
       </div>
 
       <div class="form-group">
+        <label class="form-label" for="user_website">Website</label>
+        <input v-model="activeUser.website" autocomplete="off" class="form-input" id="user_website">
+      </div>
+
+
+      <div class="form-group">
         <label class="form-label" for="user_location">Location</label>
         <input v-model="activeUser.location" autocomplete="off" class="form-input" id="user_location">
       </div>
@@ -76,8 +93,8 @@
 </template>
 
 <script>
-    import { required, email } from 'vuelidate/lib/validators'
-    import { uniqueUsername, uniqueEmail } from '@/helpers/validators'
+    import { required, email, url } from 'vuelidate/lib/validators'
+    import {uniqueEmail, uniqueUsername, responseOk, supportedImageFile} from '@/helpers/validators'
     export default {
       props: {
         user: {
@@ -125,6 +142,11 @@
               }
               return uniqueEmail(value)
             }
+          },
+          avatar: {
+              url,
+              supportedImageFile,
+              responseOk
           }
         }
       },

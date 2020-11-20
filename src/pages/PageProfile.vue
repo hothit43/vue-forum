@@ -14,11 +14,11 @@
         <span class="text-lead">
             {{user.username}}'s recent activity
         </span>
-        <a href="#">See only started threads?</a>
+        
       </div>
 
       <hr>
-      <PostList :posts="userPosts"/>
+      <PostList v-if="!isempty" :posts="userPosts"/>
     </div>
   </div>
 </template>
@@ -35,6 +35,12 @@
         PostList,
         UserProfileCard,
         UserProfileCardEditor
+      },
+    
+      data(){
+        return {
+          isempty: false
+        }
       },
 
       mixins: [asyncDataStatus],
@@ -60,6 +66,7 @@
           this.$store.dispatch('posts/fetchPosts', {ids: this.user.posts})
             .then(() => this.asyncDataStatus_fetched())
         } else {
+          this.isempty = true
           this.$emit('ready')
         }
       }

@@ -22,7 +22,7 @@ export default {
 .spinner > div {
   width: 18px;
   height: 18px;
-  background-color: #263959;
+  background-color: #800606;
 
   border-radius: 100%;
   display: inline-block;

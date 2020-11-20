@@ -43,8 +43,7 @@
                          <span v-if="!$v.form.email.required" class="form-error">This field is required</span>
                          <span v-else-if="!$v.form.email.email" class="form-error">This is not a valid email address</span>
                          <span v-if="!$v.form.email.unique" class="form-error">This email is already registered</span>
-
-                     </template>
+                    </template>
                 </div>
 
                 <div class="form-group">

@@ -19,7 +19,7 @@ export default {
                     state.unsubscribeAuthObserver()
                 }
     
-                console.log('👣 the user has changed')
+                //console.log('👣 the user has changed')
                 const unsubscribe = firebase.auth().onAuthStateChanged( user => {
                     if(user){
                       dispatch('fetchAuthUser')

@@ -14,7 +14,15 @@
           </div>
       </div>
       <div class="col-full push-top">
-          <ThreadList :threads="threads"/>
+          <ThreadList v-if="!isempty" :threads="threads"/>
+          <div v-else class="post">
+                  <div class="post-content">
+                      <div>
+                        <h3>Wow it looks so empty 😯</h3>
+                        <p style="margin-top:2px">That's okay, you can be the first to post 😉</p>
+                      </div>
+                  </div>
+              </div>
       </div>
   </div>
 </template>
@@ -26,6 +34,11 @@ import asyncDataStatus from '@/mixins/asyncDataStatus'
 export default {
     components: {
         ThreadList
+    },
+    data(){
+        return {
+            isempty: false
+        }
     },
     mixins: [asyncDataStatus],
     props: {
@@ -51,7 +64,13 @@ export default {
     created(){
         this.fetchForum({id: this.id})
             .then(forum => this.fetchThreads({ids: forum.threads}))
-            .then(threads => Promise.all(threads.map(thread => this.fetchUser({id: thread.userId}))))
+            .then(threads => { 
+                if(threads){
+                    Promise.all(threads.map(thread => this.fetchUser({id: thread.userId})))
+                } else {
+                    this.isempty = true
+                }
+            })
             .then(() => this.asyncDataStatus_fetched())
     }
 }

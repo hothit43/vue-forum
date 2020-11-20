@@ -1,5 +1,5 @@
 <template>
-        <div v-if="post && user" class="post">
+    <div v-if="post && user" class="post">
         <div class="user-info">
             <a href="#" class="user-name">{{ user.name }}</a>
             <a href="#">
@@ -64,9 +64,6 @@ export default {
     computed: {
         user(){
             return this.$store.state.users.items[this.post.userId]
-        },
-        hideIcon(){
-            
         },
         userPostsCount(){
             return this.$store.getters['users/userPostsCount'](this.post.userId)
